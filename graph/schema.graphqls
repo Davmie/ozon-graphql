@@ -1,0 +1,37 @@
+type Post {
+  id: ID!
+  title: String!
+  content: String!
+  comments: [Comment!]!
+  commentsEnabled: Boolean!
+}
+
+type Comment {
+  id: ID!
+  postId: ID!
+  parentId: ID
+  content: String!
+  createdAt: String!
+  replies: [Comment!]!
+}
+
+type Query {
+  posts: [Post!]!
+  post(id: ID!): Post
+  comments(postId: ID!, limit: Int!, offset: Int!): [Comment!]!
+}
+
+type Mutation {
+  createPost(title: String!, content: String!, commentsEnabled: Boolean!): Post!
+  createComment(postId: ID!, parentId: ID, content: String!): Comment!
+}
+
+type Subscription {
+  commentAdded(postId: ID!): Comment!
+}
+
+schema {
+  query: Query
+  mutation: Mutation
+  subscription: Subscription
+}
